@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+  </head>
+  <style>
+    /* ایجاد افکت با CSS */
+    .error-container {
+      position: fixed;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.5s ease, top 0.5s ease;
+    }
+
+    .error-container.show {
+      top: 0;
+      opacity: 1;
+    }
+
+    /* تغییر فونت خطا به فونت مورد نظر */
+    .error-message h2 {
+      font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+      font-size: 24px;
+    }
+
+    .error-message p {
+      font-family: "Font Name", sans-serif;
+      font-size: 16px;
+    }
+
+    .error-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+  <div class="modal" style="display: none">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 style="font-family: Arial, sans-serif; color: #333">Modal Title</h2>
+      <p style="font-family: Arial, sans-serif; color: #666">
+        This is a sample modal content.
+      </p>
+    </div>
+  </div>
+
+  <style>
+    .modal {
+      position: fixed;
+      z-index: 1;
+      padding-top: 100px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+
+  <body>
+    <!-- errore  -->
+    <!-- <div class="container">
+      <% if (msg){ %>
+
+      <div class="alert warning">
+        <span class="closebtn"> &times; </span> <strong> Error! </strong> <%=
+        msg %>
+      </div>
+      <% } else { %>
+      <div style="visibility: hidden" class="alert warning">
+        <span class="closebtn"> &times;</span>
+        <strong> Nothing </strong> Indicates a warning that might need
+        attention.
+      </div>
+      <% } %>
+    </div> -->
+
+    <!-- 8888888888888888888 -->
+    <!-- اضافه کردن کد خطای EJS -->
+    <div class="error-container <% if (msg){ %> show <% } %>">
+      <div class="error-message">
+        <% if (msg){ %>
+        <h2>Error!</h2>
+        <p><%= msg %></p>
+        <% } else { %>
+        <h2>Warning!</h2>
+        <p>Indicates a warning that might need attention.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- اضافه کردن جاوااسکریپت برای افکت خطا -->
+    <script>
+      // دریافت المان‌های مورد نیاز
+      const errorContainer = document.querySelector(".error-container");
+      const errorMessage = document.querySelector(".error-message");
+
+      // ایجاد افکت با جاوااسکریپت
+      if (errorContainer.classList.contains("show")) {
+        // اسکرول به بالای صفحه
+        window.scrollTo(0, 0);
+
+        // مخفی کردن افکت خطا پس از 5 ثانیه
+        setTimeout(function () {
+          errorContainer.classList.remove("show");
+        }, 2000);
+      }
+    </script>
+
+    <!-- end eroore -->
+  </body>
+</html>
+
+<section class="text-center text-lg-start">
+  <style>
+    .cascading-right {
+      margin-right: -50px;
+    }
+
+    @media (max-width: 991.98px) {
+      .cascading-right {
+        margin-right: 0;
+      }
+    }
+  </style>
+
+  <!-- Jumbotron -->
+  <div class="container py-4">
+    <div class="row g-0 align-items-center">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <div
+          class="card cascading-right"
+          style="
+            background: hsla(0, 0%, 100%, 0.55);
+            backdrop-filter: blur(30px);
+          "
+        >
+          <div class="card-body p-5 shadow-5 text-center">
+            <h2 class="fw-bold mb-5">Login Now</h2>
+            <form action="/users/login" method="post">
+              <div class="form-outline mb-4">
+                <input
+                  type="text"
+                  id="form3Example4"
+                  class="form-control"
+                  name="userName"
+                />
+                <label class="form-label" for="form3Example4">Username</label>
+              </div>
+              <div class="form-outline mb-4">
+                <input
+                  type="password"
+                  id="form3Example4"
+                  class="form-control"
+                  name="password"
+                  placeholder="must 8 Caracter & 1 number"
+                />
+                <label class="form-label" for="form3Example4">Password</label>
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block mb-4">
+                Login
+              </button>
+            </form>
+            <a
+              href="/users/signUp"
+              class="btn btn-outline-success"
+              role="button"
+              >SignUp page</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <img
+          src="https://img.freepik.com/free-vector/online-article-concept-illustration_114360-5321.jpg?w=826&t=st=1683491649~exp=1683492249~hmac=23d38a5ecba1cbcd0007d4e91ef598a6c72040e1b32d8d6474694a10359cc524"
+          class="w-1000 rounded-4 shadow-4"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+  integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+  crossorigin="anonymous"
+></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
