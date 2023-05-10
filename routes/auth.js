@@ -41,7 +41,4 @@ router.get("/deleteAcc", deleteAccount);
 // multer
 router.post("/uploadAvatar", uploadAvatar);
 
-//test route
-router.post("/bulkUpload", bulkUpload);
-
 module.exports = router;

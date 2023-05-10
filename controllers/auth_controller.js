@@ -56,6 +56,7 @@ const getLogin = async (req, res, next) => {
     res.render("error", { message: "Server Error loginPage!" });
   }
 };
+
 const postLogin = async (req, res, next) => {
   try {
     const { password } = req.body;
@@ -95,6 +96,8 @@ const getProfile = async (req, res, next) => {
 
 const logOut = async (req, res, next) => {
   try {
+    if (!req.session.user) return res.redirect("/users/login");
+
     req.session.destroy();
     res.redirect("/users/login");
   } catch (error) {
@@ -128,6 +131,7 @@ const updateProfile = async (req, res, next) => {
         new: true,
       }
     );
+
     req.session.user = updating;
 
     res.render("profile", { user: req.session.user });
@@ -163,10 +167,12 @@ const uploadAvatar = (req, res, next) => {
 
     try {
       // delete old avatar
-      if (req.session.user.avatar)
+      if (req.session.user.avatar) {
+        console.log(req.session.user);
         await fs.unlink(
           path.join(__dirname, "../public", req.session.user.avatar)
         );
+      }
 
       const userss = await user.findByIdAndUpdate(
         req.session.user._id,
@@ -186,25 +192,6 @@ const uploadAvatar = (req, res, next) => {
   });
 };
 
-const bulkUpload = (req, res, next) => {
-  const uploadUserAvatar = userAvatarUpload.array("gallery");
-
-  uploadUserAvatar(req, res, async (err) => {
-    if (err) {
-      if (err.message) return res.status(400).send(err.message);
-      return res.status(500).send("server error!");
-    }
-
-    console.log(req.file);
-    console.log(req.files);
-
-    res.json({
-      file: req.file,
-      files: req.files,
-    });
-  });
-};
-
 module.exports = {
   getLogin,
   postLogin,
@@ -215,5 +202,4 @@ module.exports = {
   updateProfile,
   deleteAccount,
   uploadAvatar,
-  bulkUpload,
 };
