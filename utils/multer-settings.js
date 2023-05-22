@@ -1,5 +1,6 @@
 const multer = require("multer");
 
+// avatarimages
 const avaterStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/images/userAvatars");
@@ -30,9 +31,16 @@ const userAvatarUpload = multer({
   },
 });
 
-const galleryStorage = multer.diskStorage({
+// thumbnailImages
+const thumbnailStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/images/userGallery");
+    if (file.fieldname === "thumbnail") {
+      cb(null, "public/images/thumbnailPic");
+    } else if (file.fieldname === "images") {
+      cb(null, "public/images/imageArticle");
+    } else {
+      cb(new Error("Invalid field name"));
+    }
   },
   filename: function (req, file, cb) {
     if (file.originalname === "grant.png")
@@ -41,8 +49,8 @@ const galleryStorage = multer.diskStorage({
   },
 });
 
-const galleryUpload = multer({
-  storage: galleryStorage,
+const articleTumbnailUpload = multer({
+  storage: thumbnailStorage,
   fileFilter: (req, file, cb) => {
     if (
       file.mimetype == "image/png" ||
@@ -60,7 +68,38 @@ const galleryUpload = multer({
   },
 });
 
+// imagePic
+// const imageStorage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "public/images/imageArticle");
+//   },
+//   filename: function (req, file, cb) {
+//     if (file.originalname === "grant.png")
+//       cb(new Error("Bad file name!"), null);
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
+
+// const imageArticleUpload = multer({
+//   storage: imageStorage,
+//   fileFilter: (req, file, cb) => {
+//     if (
+//       file.mimetype == "image/png" ||
+//       file.mimetype == "image/jpg" ||
+//       file.mimetype == "image/jpeg"
+//     ) {
+//       cb(null, true);
+//     } else {
+//       return cb(new Error("Only .png, .jpg and .jpeg format allowed!"), false);
+//     }
+//   },
+//   limits: {
+//     files: 10,
+//     fileSize: 1 * 1024 * 1024,
+//   },
+// });
+
 module.exports = {
   userAvatarUpload,
-  galleryUpload,
+  articleTumbnailUpload,
 };

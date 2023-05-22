@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+  </head>
+  <style>
+    .custom-form {
+      /* استایل‌های دیگر فرم */
+      width: 100%;
+      max-width: 500px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .custom-form {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+    }
+
+    .custom-form label {
+      font-style: italic;
+      font-weight: bold;
+      color: #333333;
+    }
+
+    .custom-form .form-control {
+      border-radius: 10px;
+      background-color: #f8f9fa;
+      border-color: #dddddd;
+      color: #555555;
+      box-shadow: none;
+    }
+
+    .custom-form textarea.form-control {
+      height: 150px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 30px;
+      font-weight: bold;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .custom-form {
+      /* سایر استایل‌ها */
+      margin: 0 auto;
+    }
+
+    .custom-form {
+      background-image: linear-gradient(to bottom, #f7baba, #f9dbdb);
+    }
+
+    .bg-custom {
+      border: none;
+    }
+
+    .form-control.custom-input {
+      background-color: rgba(
+        48,
+        48,
+        48,
+        0.7
+      ); /* تنظیم رنگ تیره‌تر برای بگراند اینپوت */
+      color: white;
+      font-size: 24px; /* تنظیم سایز بزرگتر برای متن */
+    }
+  </style>
+  <%- include('../partials/navbar') %>
+
+  <body>
+    <div class="card bg-dark text-white">
+      <img class="card-img" src="<%= Article.thumbnail %>" />
+
+      <div class="card-img-overlay">
+        <form
+          action="/article/updateArticle/<%= Article._id %>"
+          enctype="multipart/form-data"
+          method="post"
+        >
+          <div class="row mb-4">
+            <div class="col-3">
+              <div class="form-outline">
+                <label class="form-label" for="form6Example1">Title</label>
+                <input
+                  type="text"
+                  id="form6Example1"
+                  class="form-control custom-input bg-custom"
+                  value="<%= Article.title %>"
+                  name="title"
+                />
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline">
+                <label class="form-label" for="form6Example2"
+                  >Description</label
+                >
+                <input
+                  type="text"
+                  id="form6Example2"
+                  class="form-control custom-input bg-custom"
+                  value="<%= Article.description %>"
+                  name="description"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-outline mb-4">
+            <label class="form-label" for="form6Example7">Content</label>
+            <textarea
+              class="form-control custom-input bg-custom"
+              id="form6Example7"
+              rows="10"
+              name="content"
+            >
+                  <%= Article.content %>
+                </textarea
+            >
+          </div>
+
+          <div class="form-outline mb-4 col-3">
+            <label class="form-label" for="form6Example6">Author</label>
+            <input
+              type="text"
+              id="form6Example6"
+              class="form-control custom-input bg-custom"
+              value="<%= Article.author %>"
+              name="author"
+            />
+          </div>
+
+          <br />
+
+          <div class="form-outline mb-4 col-3">
+            <label class="form-label" for="form6Example6">Thumbnail</label>
+            <input
+              type="file"
+              id="form6Example6"
+              class="form-control custom-input bg-custom"
+              name="thumbnail"
+            />
+          </div>
+
+          <br />
+
+          <div class="form-outline mb-4 col-3">
+            <label class="form-label" for="form6Example6">images</label>
+            <input
+              type="file"
+              id="form6Example6"
+              class="form-control custom-input bg-custom"
+              name="images"
+            />
+          </div>
+
+          <br />
+
+          <label class="form-label" for="form6Example6">CreatedAt :</label>
+
+          <div class="form-control custom-input bg-custom col-5">
+            <p><%= Article.createdAt %></p>
+          </div>
+          <br />
+          <br />
+          <br />
+          <!-- Submit button -->
+          <button type="submit" class="btn btn-outline-success mb-5">
+            Update Article
+          </button>
+        </form>
+
+        <form
+          class="g-3"
+          action="/article/deleting/<%= Article._id %>"
+          method="get"
+        >
+          <input
+            type="submit"
+            class="btn btn-outline-danger ms-1"
+            value="Delete Account"
+          />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

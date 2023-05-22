@@ -27,7 +27,7 @@ const postSignUp = async (req, res, next) => {
       return res.render("signUp", {
         msg: " this username exists!!!!",
       });
-    console.log(findeee);
+    // console.log(findeee);
 
     const newuser = new user({
       FirstName: req.body.FirstName,
@@ -36,7 +36,6 @@ const postSignUp = async (req, res, next) => {
       password: req.body.password,
       gender: req.body.gender,
       phoneNumber: req.body.phoneNumber,
-      role: req.body.role,
     });
 
     const getUser = await newuser.save();
@@ -87,6 +86,8 @@ const getProfile = async (req, res, next) => {
   try {
     if (!req.session.user) return res.redirect("/users/login");
 
+    // res.locals.message = "helloword";
+
     res.render("profile", { user: req.session.user });
   } catch (error) {
     console.log(error);
@@ -109,6 +110,8 @@ const logOut = async (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
   try {
+    if (!req.session.user) return res.redirect("/users/login");
+
     const fields = {
       FirstName: req.body.FirstName,
       LastName: req.body.LastName,
@@ -143,6 +146,8 @@ const updateProfile = async (req, res, next) => {
 
 const deleteAccount = async (req, res, next) => {
   try {
+    if (!req.session.user) return res.redirect("/users/login");
+
     const deletUser = await user.findByIdAndRemove(req.session.user._id);
     req.session.destroy();
     res.redirect("/users/signUp");
@@ -154,7 +159,7 @@ const deleteAccount = async (req, res, next) => {
 // multr
 const uploadAvatar = (req, res, next) => {
   const uploadUserAvatar = userAvatarUpload.single("avatar");
-
+  if (!req.session.user) return res.redirect("/users/login");
   uploadUserAvatar(req, res, async (err) => {
     if (err) {
       //delete if save with error
@@ -168,7 +173,7 @@ const uploadAvatar = (req, res, next) => {
     try {
       // delete old avatar
       if (req.session.user.avatar) {
-        console.log(req.session.user);
+        // console.log(req.session.user);
         await fs.unlink(
           path.join(__dirname, "../public", req.session.user.avatar)
         );
@@ -181,7 +186,7 @@ const uploadAvatar = (req, res, next) => {
         },
         { new: true }
       );
-      console.log(req.session.user.avatar);
+      // console.log(req.session.user.avatar);
       req.session.user.avatar = userss.avatar;
 
       // return res.json(user);

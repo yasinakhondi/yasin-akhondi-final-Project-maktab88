@@ -56,11 +56,6 @@ const UserSchema = new mongoose.Schema({
       }
     },
   },
-  role: {
-    type: String,
-    trim: true,
-    enum: ["blogger", "admin"],
-  },
   avatar: {
     type: String,
   },

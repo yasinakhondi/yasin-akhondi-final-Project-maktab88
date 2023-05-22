@@ -6,8 +6,8 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const session = require("express-session");
 
-// const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/auth");
+const articleRouter = require("./routes/article_routes");
 
 const app = express();
 
@@ -35,8 +35,8 @@ app.use(
   })
 );
 
-// app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/article", articleRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

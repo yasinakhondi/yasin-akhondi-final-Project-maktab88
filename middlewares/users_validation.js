@@ -84,14 +84,6 @@ const creatValid = async (req, res, next) => {
       msg: " this phoneNumber exists!!!!",
     });
 
-  // role valid
-  if (!req.body.role) req.body.role = "blogger";
-
-  if (!["admin", "blogger"].includes(req.body.role))
-    return res.render("signUp", {
-      msg: "Your role is invalid. role must be admin or blogger",
-    });
-
   next();
 };
 

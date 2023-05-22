@@ -12,7 +12,6 @@ const {
   updateProfile,
   deleteAccount,
   uploadAvatar,
-  bulkUpload,
 } = require("../controllers/auth_controller");
 
 const updateValid = require("../middlewares/update_valid");
