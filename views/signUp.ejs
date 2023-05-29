@@ -12,7 +12,6 @@
 
 <!-- errrrrrrrrrrrrrrr -->
 <style>
-  /* ایجاد افکت با CSS */
   .error-container {
     position: fixed;
     top: -100%;
@@ -30,7 +29,6 @@
     opacity: 1;
   }
 
-  /* تغییر فونت خطا به فونت مورد نظر */
   .error-message h2 {
     font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
     font-size: 24px;
@@ -101,7 +99,7 @@
 
 <body>
   <!-- 8888888888888888888 -->
-  <!-- اضافه کردن کد خطای EJS -->
+
   <div class="error-container <% if (msg){ %> show <% } %>">
     <div class="error-message">
       <% if (msg){ %>
@@ -114,25 +112,19 @@
     </div>
   </div>
 
-  <!-- اضافه کردن جاوااسکریپت برای افکت خطا -->
   <script>
-    // دریافت المان‌های مورد نیاز
     const errorContainer = document.querySelector(".error-container");
     const errorMessage = document.querySelector(".error-message");
 
-    // ایجاد افکت با جاوااسکریپت
     if (errorContainer.classList.contains("show")) {
-      // اسکرول به بالای صفحه
       window.scrollTo(0, 0);
 
-      // مخفی کردن افکت خطا پس از 5 ثانیه
       setTimeout(function () {
         errorContainer.classList.remove("show");
       }, 2000);
     }
   </script>
 
-  <!-- Section: Design Block -->
   <section class="text-center text-lg-start">
     <style>
       .cascading-right {

@@ -8,6 +8,7 @@ const {
   readArticle,
   updateArticle,
   deleteArticle,
+  getAllArticle,
 } = require("../controllers/article_controller");
 
 // get myArticlespage
@@ -34,13 +35,6 @@ router.post(
 // delet Article
 router.get("/deleting/:articleId", deleteArticle);
 
-// router.get("/getAllArticle", async (req, res, next) => {
-//   try {
-//     const getAllArticle = await Articles.find({});
-//     res.json(getAllArticle);
-//   } catch (error) {
-//     next(createError(500, "get article errooooooooore!!!!!!!"));
-//   }
-// });
+router.get("/getAllArticle", getAllArticle);
 
 module.exports = router;

@@ -33,7 +33,9 @@ const createNewArticle = async (req, res, next) => {
     if (!req.session.user) return res.redirect("/users/login");
 
     const creatArticle = await newArticle.save();
+
     req.session.Articles = creatArticle;
+    console.log(req.session.Articles);
 
     res.redirect("/article/myArticlespage");
   } catch (error) {
@@ -108,10 +110,21 @@ const deleteArticle = async (req, res, next) => {
   }
 };
 
+const getAllArticle = async (req, res, next) => {
+  try {
+    const getAllArticle = await Articles.find({});
+    // console.log(getAllArticle);
+    res.json(getAllArticle);
+  } catch (error) {
+    next(createError(500, "get article errooooooooore!!!!!!!"));
+  }
+};
+
 module.exports = {
   getArticlePage,
   createNewArticle,
   readArticle,
   updateArticle,
   deleteArticle,
+  getAllArticle,
 };
