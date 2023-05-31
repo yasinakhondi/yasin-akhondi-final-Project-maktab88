@@ -29,8 +29,8 @@ const ArticlesSchema = new mongoose.Schema(
       required: false,
     },
     author: {
-      type: String,
-      required: true,
+      type: mongoose.Types.ObjectId,
+      ref: "user",
     },
   },
   { timestamps: true }

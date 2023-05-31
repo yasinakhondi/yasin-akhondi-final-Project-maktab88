@@ -14,6 +14,7 @@
   <%- include('../partials/navbar') %>
 
   <body>
+    <h1>author====<%= Article.author.userName %></h1>
     <div style="background-color: bisque" class="card mt-5 mb-5 col">
       <img
         src="<%= Article.thumbnail %>"
@@ -76,7 +77,6 @@
             Update Article
           </button>
           <br />
-
           <form action="/article/deleting/<%= Article._id %>" method="get">
             <input
               type="submit"
@@ -84,75 +84,18 @@
               value="Delete Account"
             />
           </form>
-          
         </div>
       </form>
     </div>
 
     <!-- comment section -->
-    
-    <body>
-      <div class="row d-flex justify-content-center">
-        <div class="col-md-8 col-lg-6">
-          <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-            <div class="card-body p-4">
-              <div class="form-outline mb-4">
-                <form action="/comment/creatCm/<%= Article._id %>" method="post">
-                 <input type="text" name="content" id="addANote" class="form-control" placeholder="Type comment..." oninvalid="this.setCustomValidity('comment is empty')" required oninput="this.setCustomValidity('')" />
-                 <input type="submit" value="Send Comment" />
-                </form>
-              </div>
-      
-              <div id="cardContainer" class="card mb-4"></div>
-      
-      
-            </div>
-          </div>
-        </div>
+    <form action="/comment/creatCm/<%= Article._id %>" method="post">
+      <div class="card mt-5 mb-5 col">
+        <label> Comment Section </label>
+        <input type="text" name="content" />
+        <input type="submit" value="Send Comment" />
       </div>
-
-    <script>
-      const comment = <%- JSON.stringify(comments) %>
-      document.addEventListener('DOMContentLoaded', function() {
-              const cardContainer = document.getElementById('cardContainer');
-              cardContainer.innerHTML = comment
-                  .map((comment) => {
-                    return `
-                    <div class="card-body">
-
-            <div class="d-flex justify-content-between">
-              <div class="d-flex flex-row align-items-center">
-                <img src="${comment.author.avatar}" alt="avatar" width="60"
-                  height="50" />
-                  
-                <p class="small mb-0 ms-2">${comment.author.userName}</p>
-              </div>
-              <p>${comment.content}</p>
-
-              <div class="d-flex flex-row align-items-center">
-                
-
-                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
-                <p class="small text-muted mb-0">${comment.createdAt}</p>
-              </div>
-              
-            </div>
-<hr>
-          </div>
-                    `
-                  }).join("");
-        })
-    </script>
+    </form>
+    <!-- looooooop -->
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

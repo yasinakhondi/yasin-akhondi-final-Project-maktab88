@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <%- include('../partials/navbar') %>
+
+  <body>
+    <!-- card gnerator -->
+    <style>
+      .card-container {
+        display: grid;
+        justify-content: center;
+        align-items: flex-start;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        width: 300px;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .card .img-fluid {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      .card .card-body {
+        margin-top: 10px;
+      }
+
+      .card .card-title,
+      .card .card-text {
+        font-family: "Your Font Name", sans-serif;
+        color: #333;
+      }
+
+      .card {
+        background: linear-gradient(to bottom, #ede615fa, #864969d4);
+      }
+    </style>
+    <div class="card-container" id="cardContainer"></div>
+    <script>
+
+      const articless = <%- JSON.stringify(data) %>;
+
+
+      document.addEventListener('DOMContentLoaded', function() {
+          const cardContainer = document.getElementById('cardContainer');
+          cardContainer.innerHTML = articless
+              .map((Article) => {
+                  return `
+                  <div class="card" style="width: 18rem;">
+                      <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                          <img src="${Article.thumbnail}" class="img-fluid" />
+                          <a href="#!">
+                              <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                          </a>
+                      </div>
+                      <div class="card-body">
+                          <p class="card-text"><h5><b>Author:</b></h5><i>${Article.author.userName}</i></p>
+                          <p class="card-title"><h5><b>Title:</b></h5><i>${Article.title}</i></p>
+                          <p class="card-text"><h5><b> Description:</b></h5><i> ${Article.description}</i></p>
+                          <p class="card-text"><h5><b> CreatedAt:</b></h5><i> ${Article.createdAt}</i></p>
+                          <a  href="/article/readArticleExplore/${Article._id}" id="yasin" class="btn btn-primary ">Show More...</a>
+                      </div>
+                  </div>`;
+              })
+              .join("");
+      });
+    </script>
+  </body>
+</html>

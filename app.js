@@ -8,6 +8,7 @@ const session = require("express-session");
 
 const usersRouter = require("./routes/auth");
 const articleRouter = require("./routes/article_routes");
+const commentsRouter = require("./routes/comments");
 
 const app = express();
 
@@ -37,6 +38,8 @@ app.use(
 
 app.use("/users", usersRouter);
 app.use("/article", articleRouter);
+app.use("/comment", commentsRouter);
+
 // app.use("/admin", adminPanel);
 
 // catch 404 and forward to error handler

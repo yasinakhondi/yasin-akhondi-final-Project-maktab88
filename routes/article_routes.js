@@ -9,6 +9,7 @@ const {
   updateArticle,
   deleteArticle,
   getAllArticle,
+  readArticleExplore,
 } = require("../controllers/article_controller");
 
 // get myArticlespage
@@ -35,6 +36,10 @@ router.post(
 // delet Article
 router.get("/deleting/:articleId", deleteArticle);
 
+// get all article in explorer
 router.get("/getAllArticle", getAllArticle);
+
+// read one article in explore
+router.get("/readArticleExplore/:articleId", readArticleExplore);
 
 module.exports = router;

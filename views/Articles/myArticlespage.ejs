@@ -21,8 +21,8 @@
     <style>
     .card-container {
         display: grid;
-        justify-content: center; /* مرکز‌چینی افقی */
-        align-items: flex-start; /* مرکز‌چینی عمودی */
+        justify-content: center; 
+        align-items: flex-start;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 20px;
     }
@@ -190,21 +190,6 @@
               </div>
               </div>
 
-              
-              
-              <div class="mb-3 position-relative">
-                <label for="validationServer03" class="form-label">Author</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="author"
-                  id="validationServer03"
-                  required
-                />
-                <div class="invalid-tooltip">
-                  Author is required
-              </div>
-              </div>
               <button
                 type="submit"
                 class="btn btn-primary"
@@ -279,7 +264,7 @@
                               <p class="card-title"><h5><b> Title:</b> </h5><i> ${Article.title}</i> </p>
                               <p class="card-text"><h5><b> Description:</b></h5><i> ${Article.description}</i></p>
                               <p class="card-text"><h5><b> CreatedAt:</b></h5><i> ${Article.createdAt}</i></p>
-                              <a  href="/article/readArticle/${Article._id}" id="yasin" class="btn btn-primary ">Show More...</a>
+                              <a  href="/comment/readCm/${Article._id}" id="yasin" class="btn btn-primary ">Show More...</a>
                           </div>
                       </div>`;
                   })

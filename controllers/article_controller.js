@@ -6,7 +6,11 @@ const createError = require("http-errors");
 const getArticlePage = async (req, res, next) => {
   try {
     if (!req.session.user) return res.redirect("/users/login");
-    const userArticles = await Articles.find({ user: req.session.user._id });
+
+    const userArticles = await Articles.find({
+      user: req.session.user._id,
+    }).populate({ path: "author", select: "userName" });
+
     res.render("Articles/myArticlespage.ejs", { data: userArticles });
   } catch (error) {
     console.log(error);
@@ -26,16 +30,13 @@ const createNewArticle = async (req, res, next) => {
       thumbnail: "/images/thumbnailPic/" + thumbnailA,
       images: "/images/imageArticle/" + imagesA,
       content: req.body.content,
-      author: req.body.author,
+      author: req.session.user._id,
       user: req.session.user._id,
     });
 
     if (!req.session.user) return res.redirect("/users/login");
 
     const creatArticle = await newArticle.save();
-
-    req.session.Articles = creatArticle;
-    console.log(req.session.Articles);
 
     res.redirect("/article/myArticlespage");
   } catch (error) {
@@ -45,7 +46,6 @@ const createNewArticle = async (req, res, next) => {
 };
 
 // read article
-
 const readArticle = async (req, res, next) => {
   try {
     if (!req.session.user) return res.redirect("/users/login");
@@ -112,11 +112,33 @@ const deleteArticle = async (req, res, next) => {
 
 const getAllArticle = async (req, res, next) => {
   try {
-    const getAllArticle = await Articles.find({});
-    // console.log(getAllArticle);
-    res.json(getAllArticle);
+    if (!req.session.user) return res.redirect("/users/login");
+
+    const getAllArticle = await Articles.find({}).populate({
+      path: "author",
+      select: "userName",
+    });
+
+    res.render("Articles/exploreArticle.ejs", { data: getAllArticle });
   } catch (error) {
     next(createError(500, "get article errooooooooore!!!!!!!"));
+  }
+};
+
+// read article
+const readArticleExplore = async (req, res, next) => {
+  try {
+    if (!req.session.user) return res.redirect("/users/login");
+
+    const readArticle = await Articles.findById(req.params.articleId).populate({
+      path: "author",
+      select: "userName",
+    });
+
+    res.render("Articles/oneArticleExplore", { Article: readArticle });
+  } catch (error) {
+    console.log(error.message);
+    next(createError(500, "read article errooooooooore!!!!!!!"));
   }
 };
 
@@ -127,4 +149,5 @@ module.exports = {
   updateArticle,
   deleteArticle,
   getAllArticle,
+  readArticleExplore,
 };

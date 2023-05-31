@@ -4,7 +4,6 @@ const articlesValidationSchema = Joi.object({
   title: Joi.string().min(3),
   description: Joi.string().min(3),
   content: Joi.string().required(),
-  author: Joi.string().required(),
 });
 
 const validateArticles = (req, res, next) => {
