@@ -1,6 +1,7 @@
 const express = require("express");
 const Articles = require("../models/Articles_models");
 const createError = require("http-errors");
+const Comment = require("../models/comment_models");
 
 // getArticlePage
 const getArticlePage = async (req, res, next) => {
@@ -50,9 +51,11 @@ const readArticle = async (req, res, next) => {
   try {
     if (!req.session.user) return res.redirect("/users/login");
 
-    const readArticle = await Articles.findById(req.params.articleId);
+    const Article = await Articles.findById(req.params.articleId);
 
-    res.render("Articles/oneArticle", { Article: readArticle });
+    res.render("Articles/oneArticle", {
+      Article,
+    });
   } catch (error) {
     console.log(error.message);
     next(createError(500, "read article errooooooooore!!!!!!!"));
@@ -89,7 +92,11 @@ const updateArticle = async (req, res, next) => {
       }
     );
 
-    res.render("Articles/oneArticle", { Article: updateArticle });
+    res.redirect(
+      `http://localhost:3050/comment/readCm/${req.params.articleId}`
+    );
+
+    // res.redirect("Articles/oneArticle", { Article: updateArticle });
   } catch (error) {
     console.log(error.message);
     next(createError(500, "Update article errooooooooore!!!!!!!"));
@@ -102,6 +109,7 @@ const deleteArticle = async (req, res, next) => {
     if (!req.session.user) return res.redirect("/users/login");
 
     const deleting = await Articles.findByIdAndDelete(req.params.articleId);
+    // if (!!deleting) return await Comment.findByIdAndDelete();
 
     res.redirect("/article/myArticlespage");
   } catch (error) {
@@ -110,6 +118,7 @@ const deleteArticle = async (req, res, next) => {
   }
 };
 
+// get all article in explorer
 const getAllArticle = async (req, res, next) => {
   try {
     if (!req.session.user) return res.redirect("/users/login");
@@ -119,26 +128,43 @@ const getAllArticle = async (req, res, next) => {
       select: "userName",
     });
 
-    res.render("Articles/exploreArticle.ejs", { data: getAllArticle });
+    res.render("explorer/exploreArticle.ejs", { data: getAllArticle });
   } catch (error) {
     next(createError(500, "get article errooooooooore!!!!!!!"));
   }
 };
 
-// read article
+// read one article exploree
 const readArticleExplore = async (req, res, next) => {
   try {
     if (!req.session.user) return res.redirect("/users/login");
 
-    const readArticle = await Articles.findById(req.params.articleId).populate({
+    const Article = await Articles.findById(req.params.articleId).populate({
       path: "author",
       select: "userName",
     });
 
-    res.render("Articles/oneArticleExplore", { Article: readArticle });
+    const comments = await Comment.find({
+      article: req.params.articleId,
+    }).populate({ path: "author", select: "userName avatar" });
+
+    const loggedInUserId = req.session.user ? req.session.user._id : null;
+    const showUpdateDeleteButtons = Article.author._id.equals(loggedInUserId);
+
+    const loggedInUserUserName = req.session.user.userName;
+
+    const userIsAdmin = req.session.user.role === "ADMIN";
+
+    res.render("explorer/oneArticleExplore", {
+      Article,
+      comments,
+      showUpdateDeleteButtons,
+      loggedInUserUserName,
+      userIsAdmin,
+    });
   } catch (error) {
     console.log(error.message);
-    next(createError(500, "read article errooooooooore!!!!!!!"));
+    next(createError(500, "readسسسس article errooooooooore!!!!!!!"));
   }
 };
 

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+  </head>
+
+  <%- include('../partials/navbar') %>
+
+  <body>
+    <div style="background-color: bisque" class="card mt-5 mb-5 col">
+      <img
+        src="<%= Article.thumbnail %>"
+        class="card-img-top"
+        style="height: 200px; width: 380px"
+      />
+      <form
+        action="/article/updateArticle/<%= Article._id %>"
+        enctype="multipart/form-data"
+        method="post"
+      >
+        <div class="card-body">
+          <small><h4>Author : <%= Article.author.userName %></h4> </small>
+
+          <div class="form-outline row col-sm-2">
+            <label><h5>Title</h5></label>
+            <input
+              type="text"
+              class="form-control"
+              value="<%= Article.title %>"
+              name="title"
+            />
+          </div>
+          <br />
+
+          <div class="form-outline row col-sm-4">
+            <label> <h5>Description</h5></label>
+            <input
+              type="text"
+              id="form6Example2"
+              class="form-control"
+              value="<%= Article.description %>"
+              name="description"
+            />
+          </div>
+
+          <div class="form-outline row col-sm-6">
+            <label><h5>Content</h5></label>
+            <textarea
+              class="form-control"
+              id="form6Example7"
+              rows="4"
+              name="content"
+            >
+<%=Article.content%></textarea
+            >
+          </div>
+          <br />
+
+          <small><%= Article.createdAt %></small>
+
+          <br />
+          <br />
+          <br />
+          <br />
+
+          <% if (showUpdateDeleteButtons) { %>
+          <div class="form-outline row col-sm-3">
+            <label><h5>Thumbnail</h5></label>
+            <input type="file" name="thumbnail" />
+          </div>
+          <button type="submit" class="btn btn-outline-success mb-5">
+            Update Article
+          </button>
+          <br />
+          <form action="/article/deleting/<%= Article._id %>" method="get">
+            <input
+              type="submit"
+              class="btn btn-outline-danger"
+              value="Delete Article"
+            />
+          </form>
+          <% } %>
+        </div>
+      </form>
+    </div>
+
+    <!-- comment section -->
+
+    <body>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="card shadow-0 border" style="background-color: #f0f2f5">
+            <div class="card-body p-4">
+              <div class="form-outline mb-4">
+                <form
+                  action="/comment/creatCm/<%= Article._id %>"
+                  method="post"
+                >
+                  <input
+                    type="text"
+                    name="content"
+                    id="addANote"
+                    class="form-control"
+                    placeholder="Type comment..."
+                    oninvalid="this.setCustomValidity('comment is empty')"
+                    required
+                    oninput="this.setCustomValidity('')"
+                  />
+                  <input type="submit" value="Send Comment" />
+                </form>
+              </div>
+
+              <div id="cardContainer" class="card mb-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const x = "<%= loggedInUserUserName %>";
+
+        const userIsAdmin = JSON.parse("<%= userIsAdmin %>")
+
+
+              const comment = <%- JSON.stringify(comments) %>
+              document.addEventListener('DOMContentLoaded', function() {
+                      const cardContainer = document.getElementById('cardContainer');
+                      cardContainer.innerHTML = comment
+                          .map((comment) => {
+                            return `
+                            <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex flex-row align-items-center">
+
+                        <br />
+
+                        <img src="${comment.author.avatar}"  width="60"
+                          height="50" />
+
+                        <p class="small mb-0 ms-2">${comment.author.userName}</p>
+                      </div>
+
+                      <p>${comment.content}</p>
+
+                      <form action="/comment/updateCm/${comment._id}" method="post">
+                        <input
+                        type="text"
+                        name="content"
+                        value="${comment.content}"
+                      />
+
+
+                      ${(x === comment.author.userName || !!userIsAdmin  )? `<input
+                         type="submit"
+                         class="btn btn-outline-success"
+                         value="Update Comment"
+                       />
+
+                     </form>
+
+                  <form action="/comment/${comment._id}" method="get">
+                    <input
+                      type="submit"
+                      class="btn btn-outline-danger"
+                      value="Delete Account"
+                    />
+           </form>` : ""}
+
+
+
+
+
+
+
+                      <div class="d-flex flex-row align-items-center">
+
+
+                        <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
+                        <p class="small text-muted mb-0">${comment.createdAt}</p>
+                      </div>
+
+                    </div>
+        <hr>
+                  </div>
+                            `
+
+                          }).join("");
+                })
+      </script>
+    </body>
+  </body>
+</html>

@@ -35,6 +35,12 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     enum: ["male", "female", "not-set"],
   },
+  role: {
+    type: String,
+    enum: ["ADMIN", "BLOGGER"],
+    required: true,
+    default: "BLOGGER",
+  },
   phoneNumber: {
     type: String,
     unique: true,
