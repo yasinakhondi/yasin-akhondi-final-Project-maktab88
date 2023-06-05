@@ -70,7 +70,8 @@
           <br />
           <br />
 
-          <% if (showUpdateDeleteButtons) { %>
+          <% if (showUpdateDeleteButtons ||userIsAdmin ) { %>
+
           <div class="form-outline row col-sm-3">
             <label><h5>Thumbnail</h5></label>
             <input type="file" name="thumbnail" />
@@ -79,13 +80,9 @@
             Update Article
           </button>
           <br />
-          <form action="/article/deleting/<%= Article._id %>" method="get">
-            <input
-              type="submit"
-              class="btn btn-outline-danger"
-              value="Delete Article"
-            />
-          </form>
+
+          <a href="/article/deleting/<%= Article._id %>"> Delete Article </a>
+
           <% } %>
         </div>
       </form>

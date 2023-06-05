@@ -1,4 +1,3 @@
-const express = require("express");
 const Articles = require("../models/Articles_models");
 const createError = require("http-errors");
 const Comment = require("../models/comment_models");
@@ -128,7 +127,9 @@ const getAllArticle = async (req, res, next) => {
       select: "userName",
     });
 
-    res.render("explorer/exploreArticle.ejs", { data: getAllArticle });
+    res.render("explorer/exploreArticle.ejs", {
+      data: getAllArticle,
+    });
   } catch (error) {
     next(createError(500, "get article errooooooooore!!!!!!!"));
   }
@@ -152,7 +153,6 @@ const readArticleExplore = async (req, res, next) => {
     const showUpdateDeleteButtons = Article.author._id.equals(loggedInUserId);
 
     const loggedInUserUserName = req.session.user.userName;
-
     const userIsAdmin = req.session.user.role === "ADMIN";
 
     res.render("explorer/oneArticleExplore", {

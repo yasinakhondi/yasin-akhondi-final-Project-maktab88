@@ -168,6 +168,13 @@
               value="Delete Account"
             />
           </form>
+
+          <% if (isAdmin) { %>
+          <!-- adminPanel -->
+          <form class="g-3" action="/ADMIN/ADMIN" method="get">
+            <input type="submit" class="btn btn-info ms-1" value="AdminPanel" />
+          </form>
+          <% } %>
         </div>
       </div>
     </section>

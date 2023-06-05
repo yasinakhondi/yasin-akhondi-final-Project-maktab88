@@ -7,8 +7,9 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 
 const usersRouter = require("./routes/auth");
-const articleRouter = require("./routes/article_routes");
+const articleRouter = require("./routes/article");
 const commentsRouter = require("./routes/comments");
+const adminRouter = require("./routes/ADMIN");
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(
 app.use("/users", usersRouter);
 app.use("/article", articleRouter);
 app.use("/comment", commentsRouter);
+app.use("/ADMIN", adminRouter);
 
 // app.use("/admin", adminPanel);
 

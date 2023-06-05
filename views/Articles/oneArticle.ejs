@@ -74,7 +74,7 @@
           <br />
           <br />
           
-          <% if (showUpdateDeleteButtons) { %>
+          <% if (showUpdateDeleteButtons || userIsAdmin ) { %>
             <div class="form-outline row col-sm-3">
               <label><h5>Thumbnail</h5></label>
               <input type="file" name="thumbnail" />
@@ -121,6 +121,7 @@
     <script>
 const x = "<%= loggedInUserUserName %>";
 
+const userIsAdmin = JSON.parse("<%= userIsAdmin %>")
 
 
 
@@ -155,7 +156,7 @@ const x = "<%= loggedInUserUserName %>";
 
 
 
-               ${(x === comment.author.userName  )? `<input
+               ${(x === comment.author.userName || !!userIsAdmin   )? `<input
                          type="submit"
                          class="btn btn-outline-success"
                          value="Update Comment"

@@ -86,9 +86,9 @@ const getProfile = async (req, res, next) => {
   try {
     if (!req.session.user) return res.redirect("/users/login");
 
-    // res.locals.message = "helloword";
+    const isAdmin = req.session.user.role === "ADMIN";
 
-    res.render("profile", { user: req.session.user });
+    res.render("profile", { user: req.session.user, isAdmin });
   } catch (error) {
     console.log(error);
     res.render("error", { message: "Server Error profilePage!" });
