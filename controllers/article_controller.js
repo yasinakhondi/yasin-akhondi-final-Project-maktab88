@@ -92,7 +92,7 @@ const updateArticle = async (req, res, next) => {
     );
 
     res.redirect(
-      `http://localhost:3050/comment/readCm/${req.params.articleId}`
+      `http://localhost:3050/article/readCm/${req.params.articleId}`
     );
 
     // res.redirect("Articles/oneArticle", { Article: updateArticle });
@@ -108,7 +108,10 @@ const deleteArticle = async (req, res, next) => {
     if (!req.session.user) return res.redirect("/users/login");
 
     const deleting = await Articles.findByIdAndDelete(req.params.articleId);
-    // if (!!deleting) return await Comment.findByIdAndDelete();
+
+    const deletComments = await Comment.deleteMany({
+      article: req.params.articleId,
+    });
 
     res.redirect("/article/myArticlespage");
   } catch (error) {
@@ -164,7 +167,36 @@ const readArticleExplore = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error.message);
-    next(createError(500, "readسسسس article errooooooooore!!!!!!!"));
+    next(createError(500, "readarticle errooooooooore!!!!!!!"));
+  }
+};
+
+// read comments in one Article
+const readComments = async (req, res, next) => {
+  try {
+    const Article = await Articles.findById(req.params.articleId);
+
+    const comments = await Comment.find({
+      article: req.params.articleId,
+    }).populate({ path: "author", select: "userName avatar " });
+
+    const loggedInUserId = req.session.user ? req.session.user._id : null;
+    const showUpdateDeleteButtons = Article.author._id.equals(loggedInUserId);
+
+    const loggedInUserUserName = req.session.user.userName;
+
+    const userIsAdmin = req.session.user.role === "ADMIN";
+
+    res.render("Articles/oneArticle", {
+      comments,
+      Article,
+      showUpdateDeleteButtons,
+      loggedInUserUserName,
+      userIsAdmin,
+    });
+  } catch (error) {
+    console.log(error);
+    next(createError(500, "Read Comment errooooooooore!!!!!!!"));
   }
 };
 
@@ -176,4 +208,5 @@ module.exports = {
   deleteArticle,
   getAllArticle,
   readArticleExplore,
+  readComments,
 };

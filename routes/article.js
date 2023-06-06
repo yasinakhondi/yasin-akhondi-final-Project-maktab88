@@ -10,6 +10,7 @@ const {
   deleteArticle,
   getAllArticle,
   readArticleExplore,
+  readComments,
 } = require("../controllers/article_controller");
 
 // get myArticlespage
@@ -41,5 +42,8 @@ router.get("/getAllArticle", getAllArticle);
 
 // read one article in explore
 router.get("/readArticleExplore/:articleId", readArticleExplore);
+
+// read comment
+router.get("/readCm/:articleId", readComments);
 
 module.exports = router;

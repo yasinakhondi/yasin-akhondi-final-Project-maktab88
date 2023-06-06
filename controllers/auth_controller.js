@@ -4,6 +4,8 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 const path = require("path");
 const fs = require("fs/promises");
+const Comment = require("../models/comment_models");
+const Articles = require("../models/Articles_models");
 
 const { userAvatarUpload } = require("../utils/multer-settings");
 
@@ -149,6 +151,15 @@ const deleteAccount = async (req, res, next) => {
     if (!req.session.user) return res.redirect("/users/login");
 
     const deletUser = await user.findByIdAndRemove(req.session.user._id);
+
+    const deleteArticle = await Articles.deleteMany({
+      user: req.session.user._id,
+    });
+
+    const deletComments = await Comment.deleteMany({
+      author: req.session.user._id,
+    });
+
     req.session.destroy();
     res.redirect("/users/signUp");
   } catch (error) {

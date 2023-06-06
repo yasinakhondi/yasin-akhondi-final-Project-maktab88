@@ -1,5 +1,7 @@
 const createError = require("http-errors");
 const User = require("../models/user_models");
+const Comment = require("../models/comment_models");
+const Articles = require("../models/Articles_models");
 
 // get admin panel
 const getAdminPanel = async (req, res, next) => {
@@ -17,6 +19,15 @@ const getAdminPanel = async (req, res, next) => {
 const deletingBlooger = async (req, res, next) => {
   try {
     const deleting = await User.findByIdAndDelete(req.params.bloggerId);
+
+    const deleteArticle = await Articles.deleteMany({
+      user: req.params.bloggerId,
+    });
+
+    const deletComments = await Comment.deleteMany({
+      author: req.params.bloggerId,
+    });
+
     res.redirect("/ADMIN/ADMIN");
   } catch (error) {
     console.log(error.message);

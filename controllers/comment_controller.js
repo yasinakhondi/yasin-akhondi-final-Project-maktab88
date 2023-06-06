@@ -52,7 +52,7 @@ const updatingComment = async (req, res, next) => {
     );
 
     // todoo
-    res.redirect(`http://localhost:3050/comment/readCm/${updateCm.article}`);
+    res.redirect(`http://localhost:3050/article/readCm/${updateCm.article}`);
   } catch (error) {
     console.log(error);
     next(createError(500, "Updating Comment errooooooooore!!!!!!!"));
@@ -64,7 +64,7 @@ const deletingComment = async (req, res, next) => {
   try {
     const deleting = await Comment.findByIdAndDelete(req.params.commentId);
 
-    res.redirect(`http://localhost:3050/comment/readCm/${deleting.article}`);
+    res.redirect(`http://localhost:3050/article/readCm/${deleting.article}`);
   } catch (error) {
     console.log(error);
     next(createError(500, "deleting Comment errooooooooore!!!!!!!"));
