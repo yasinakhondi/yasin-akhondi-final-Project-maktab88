@@ -90,6 +90,8 @@ const getProfile = async (req, res, next) => {
 
     const isAdmin = req.session.user.role === "ADMIN";
 
+    console.log("isAdmin: ", isAdmin);
+
     res.render("profile", { user: req.session.user, isAdmin });
   } catch (error) {
     console.log(error);
@@ -137,9 +139,11 @@ const updateProfile = async (req, res, next) => {
       }
     );
 
+    const isAdmin = req.session.user.role === "ADMIN";
+
     req.session.user = updating;
 
-    res.render("profile", { user: req.session.user });
+    res.render("profile", { user: req.session.user, isAdmin });
   } catch (error) {
     console.log(error);
     return next(createError(500, error.message));

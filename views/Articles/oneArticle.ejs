@@ -85,7 +85,7 @@
             </button>
             
             <br />
-            <a href="/article/deleting/<%= Article._id %>" >
+            <a class="btn btn-outline-danger mb-5" href="/article/deleting/<%= Article._id %>" >
               delete Article
   
             </a>
@@ -136,7 +136,7 @@ const userIsAdmin = JSON.parse("<%= userIsAdmin %>")
 
             <div class="d-flex justify-content-between">
               <div class="d-flex flex-row align-items-center">
-                <img src="${comment.author.avatar}" alt="avatar" width="60"
+                <img src="${comment.author.avatar}"  width="60"
                   height="50" />
                   
                 <p class="small mb-0 ms-2">${comment.author.userName}</p>

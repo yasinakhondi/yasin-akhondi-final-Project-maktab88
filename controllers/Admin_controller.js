@@ -20,11 +20,11 @@ const deletingBlooger = async (req, res, next) => {
   try {
     const deleting = await User.findByIdAndDelete(req.params.bloggerId);
 
-    const deleteArticle = await Articles.deleteMany({
+    await Articles.deleteMany({
       user: req.params.bloggerId,
     });
 
-    const deletComments = await Comment.deleteMany({
+    await Comment.deleteMany({
       author: req.params.bloggerId,
     });
 
